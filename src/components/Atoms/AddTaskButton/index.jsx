@@ -7,7 +7,7 @@ import plus from "../../../assets/svg/plus.svg";
 const AddTaskButton = ({ onClick }) => {
   return (
     <StyledAddTaskButton onClick={onClick}>
-      <StyledHover></StyledHover>
+      <StyledHover />
       <StyledButtonContainer>
         <StyledPlusIcon src={plus} />
         <StyledButtonText>タスクを追加</StyledButtonText>
