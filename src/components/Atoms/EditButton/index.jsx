@@ -6,7 +6,7 @@ import pencil from "../../../assets/svg/pencil.svg";
 const EditButton = ({ onClick }) => {
   return (
     <StyleEditButton onClick={onClick}>
-      <StyledCicle></StyledCicle>
+      <StyledCircle />
       <StyledPencilIcon src={pencil} />
     </StyleEditButton>
   );
@@ -14,7 +14,7 @@ const EditButton = ({ onClick }) => {
 
 export default EditButton;
 
-const StyledCicle = styled.div`
+const StyledCircle = styled.div`
   position: absolute;
   top: 0px;
   left: 0px;
@@ -40,7 +40,7 @@ const StyleEditButton = styled.button`
   padding: 0px;
   background-color: transparent;
   &:hover {
-    ${StyledCicle} {
+    ${StyledCircle} {
       opacity: 0.2;
     }
   }
