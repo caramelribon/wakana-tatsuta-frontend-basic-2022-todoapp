@@ -10,28 +10,20 @@ const Input = (props) => {
     if (inputRef.current) {
       inputRef.current.value = props.defalutValue;
       inputRef.current.focus();
+      inputRef.current.onblur = (e) => {
+        const inputText = inputRef.current.value;
+        props.onEditComplete(inputText);
+      };
+      inputRef.current.onkeypress = (e) => {
+        const inputText = inputRef.current.value;
+        if (e.key === "Enter") {
+          props.onEditComplete(inputText);
+        }
+      };
     }
   }, []);
 
-  const onBlurEvent = (inputText) => {
-    props.onEditComplete(inputText);
-  };
-
-  const onKeyEnterPress = (e, inputText) => {
-    if (e.key === "Enter") {
-      props.onEditComplete(inputText);
-    }
-  };
-
-  return (
-    <StyledInput
-      ref={inputRef}
-      onBlur={() => onBlurEvent(inputRef.current.value)}
-      onKeyPress={(e) => onKeyEnterPress(e, inputRef.current.value)}
-      type="text"
-      name="input"
-    ></StyledInput>
-  );
+  return <StyledInput ref={inputRef} type="text" name="input"></StyledInput>;
 };
 
 export default Input;
