@@ -6,40 +6,39 @@ import EditButton from "../../Atoms/EditButton/index";
 import COLOR from "../../../variables/color";
 import TEXT from "../../../variables/texts";
 
-const Task = (props) => {
-  // inputを表示するか、タスク名を表示するかの状態管理
-  const [isVisible, setVisibility] = useState(false);
+const Task = ({
+  defalutValue,
+  defalutIsEditing,
+  onEditComplete,
+  onTaskComplete,
+  taskName,
+}) => {
   // タスクが編集中かどうかの状態管理
-  const [isEdit, setEdit] = useState(props.defalutEdit);
+  const [isEditing, setIsEditing] = useState({ defalutIsEditing });
 
-  const onTaskComplete = () => {
-    setVisibility(false);
-    setEdit(false);
+  onTaskComplete = () => {
+    setIsEditing(false);
     console.log("task completed");
   };
 
   const onEditStart = () => {
-    setVisibility(true);
-    setEdit(true);
+    setIsEditing(true);
   };
 
-  const onEditComplete = (taskName) => {
-    setVisibility(false);
-    setEdit(false);
+  onEditComplete = (taskName) => {
+    setIsEditing(false);
     console.log(`taskname changed: ${taskName}`);
+    console.log({ taskName });
   };
 
   return (
     <StyledTask>
       <CheckBox onClick={() => onTaskComplete()} />
-      {isVisible ? (
-        <Input
-          defalutValue={props.defalutValue}
-          onEditComplete={onEditComplete}
-        />
+      {isEditing ? (
+        <Input defalutValue={defalutValue} onEditComplete={onEditComplete} />
       ) : (
         <StyledTaskNameArea>
-          <StyledTaskTitle>{props.defalutValue}</StyledTaskTitle>
+          <StyledTaskTitle>{defalutValue}</StyledTaskTitle>
           <EditButton onClick={() => onEditStart()} />
         </StyledTaskNameArea>
       )}
