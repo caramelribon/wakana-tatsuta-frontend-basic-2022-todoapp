@@ -11,35 +11,36 @@ const Task = ({
   defalutIsEditing,
   onEditComplete,
   onTaskComplete,
-  taskName,
 }) => {
   // タスクが編集中かどうかの状態管理
-  const [isEditing, setIsEditing] = useState({ defalutIsEditing });
+  const [isEditing, setIsEditing] = useState(defalutIsEditing);
 
-  onTaskComplete = () => {
+  const handleCompleteTask = () => {
     setIsEditing(false);
-    console.log("task completed");
+    onTaskComplete();
   };
 
   const onEditStart = () => {
     setIsEditing(true);
   };
 
-  onEditComplete = (taskName) => {
+  const handleCompleteEdit = (taskName) => {
     setIsEditing(false);
-    console.log(`taskname changed: ${taskName}`);
-    console.log({ taskName });
+    onEditComplete(taskName);
   };
 
   return (
     <StyledTask>
-      <CheckBox onClick={() => onTaskComplete()} />
+      <CheckBox onClick={handleCompleteTask} />
       {isEditing ? (
-        <Input defalutValue={defalutValue} onEditComplete={onEditComplete} />
+        <Input
+          defalutValue={defalutValue}
+          onEditComplete={handleCompleteEdit}
+        />
       ) : (
         <StyledTaskNameArea>
           <StyledTaskTitle>{defalutValue}</StyledTaskTitle>
-          <EditButton onClick={() => onEditStart()} />
+          <EditButton onClick={onEditStart} />
         </StyledTaskNameArea>
       )}
     </StyledTask>
