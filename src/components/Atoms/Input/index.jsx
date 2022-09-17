@@ -29,7 +29,7 @@ const Input = (props) => {
 export default Input;
 
 const StyledInput = styled.input`
-  width: 232px;
+  flex: 1 1 auto;
   height: 20px;
   border-radius: 2px;
   border: none;
