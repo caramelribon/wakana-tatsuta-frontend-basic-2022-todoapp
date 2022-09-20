@@ -10,36 +10,19 @@ const TodoCard = () => {
   let todoTaskList = [];
 
   todoTaskList = todoTask.map((task) => {
-    if (task.state == "TODO")
-      if (task.id == todoTask.length - 1) {
-        // addTask()が実行されたとき、todoTaskの一番後ろのコンポーネントだけにdefaultIsEditingを渡す
-        return (
-          <StyledTodoListItem>
-            <Task
-              key={task.id}
-              defalutValue={task.name}
-              defalutIsEditing
-              onEditComplete={(taskName) =>
-                handleEditComplete(task.id, taskName)
-              }
-              onTaskComplete={() => handleTaskComplete(task.id)}
-            />
-          </StyledTodoListItem>
-        );
-      } else {
-        return (
-          <StyledTodoListItem>
-            <Task
-              key={task.id}
-              defalutValue={task.name}
-              onEditComplete={(taskName) =>
-                handleEditComplete(task.id, taskName)
-              }
-              onTaskComplete={() => handleTaskComplete(task.id)}
-            />
-          </StyledTodoListItem>
-        );
-      }
+    if (task.state === "TODO")
+      // addTask()が実行されたとき、todoTaskの一番後ろのコンポーネントだけにdefaultIsEditingを渡す
+      return (
+        <StyledTodoListItem>
+          <Task
+            key={task.id}
+            defalutValue={task.name}
+            defalutIsEditing={task.id === todoTask.length - 1}
+            onEditComplete={(taskName) => handleEditComplete(task.id, taskName)}
+            onTaskComplete={() => handleTaskComplete(task.id)}
+          />
+        </StyledTodoListItem>
+      );
   });
 
   useEffect(() => {
