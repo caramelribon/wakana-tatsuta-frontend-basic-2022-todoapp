@@ -8,7 +8,7 @@ const Input = (props) => {
 
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.value = props.defalutValue;
+      inputRef.current.value = props.defaultValue;
       inputRef.current.focus();
       inputRef.current.onblur = (e) => {
         const inputText = e.target.value;

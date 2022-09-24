@@ -5,75 +5,66 @@ import Task from "../../Molecules/Task/index";
 import COLOR from "../../../variables/color";
 
 const TodoCard = () => {
-  const [todoTask, setTodoTask] = useState([]);
-  const [taskAddOREdit, setAddOREdit] = useState(false);
+  const [taskList, setTaskList] = useState([]);
+  const [taskAddOrEdit, setAddOrEdit] = useState(false);
 
-  let todoTaskList = [];
-  let todoStateTask = [];
+  // タスクのStateが"TODO"のものを抽出
+  const todoStateTask = taskList.filter((task) => {
+    return task.state === "TODO";
+  });
 
-  const handleTaskComplete = (id) => {
-    let completedTask = todoTask.map((task) => {
-      if (task.id === id) {
+  // タスクを追加したときの関数(AddTaskButtonを押したとき)
+  const addTask = () => {
+    //const idNum = taskList.length;
+    setTaskList((taskList) => [...taskList, { name: "", state: "TODO" }]);
+    setAddOrEdit(true);
+  };
+
+  // タスクが完了したときの関数(CheckBoxにチェックを入れたとき)
+  const handleTaskComplete = (taskIndex) => {
+    const completedTask = taskList.map((task, index) => {
+      if (index === taskIndex) {
         task.state = "DONE";
       }
       return task;
     });
-    setTodoTask(completedTask);
+    setTaskList(completedTask);
   };
 
-  const handleEditComplete = (id, taskName) => {
-    let edittedTask = [];
+  // タスクの編集が完了したときの関数
+  const handleEditComplete = (taskIndex, taskName) => {
+    let editedTask = [];
     if (taskName === "") {
-      edittedTask = todoTask.filter((task) => {
-        return task.id !== id;
+      editedTask = taskList.filter((task, index) => {
+        return index !== taskIndex;
       });
     } else {
-      edittedTask = todoTask.map((task) => {
-        if (task.id === id) {
+      editedTask = taskList.map((task, index) => {
+        if (index === taskIndex) {
           task.name = taskName;
         }
         return task;
       });
     }
-    setTodoTask(edittedTask);
-    setAddOREdit(false);
-  };
-
-  // task.stateがTODOのものだけ抽出する
-  todoStateTask = todoTask.filter((task) => {
-    return task.state === "TODO";
-  });
-
-  todoTaskList = todoStateTask.map((task, index) => {
-    // addTask()が実行されたとき、todoTaskの一番後ろのコンポーネントだけにdefaultIsEditingを渡す
-    return (
-      <StyledTodoListItem key={index}>
-        <Task
-          key={task.id}
-          defalutValue={task.name}
-          defalutIsEditing={
-            taskAddOREdit ? task.id === todoTask.length - 1 : false
-          }
-          onEditComplete={(taskName) => handleEditComplete(task.id, taskName)}
-          onTaskComplete={() => handleTaskComplete(task.id)}
-        />
-      </StyledTodoListItem>
-    );
-  });
-
-  const addTask = () => {
-    const idNum = todoTask.length;
-    setTodoTask((todoTask) => [
-      ...todoTask,
-      { id: idNum, name: "", state: "TODO" },
-    ]);
-    setAddOREdit(true);
+    setTaskList(editedTask);
+    setAddOrEdit(false);
   };
 
   return (
     <StyledTodoCard>
       <AddTaskButton onClick={addTask} />
-      <StyledTodoList>{todoTaskList}</StyledTodoList>
+      <StyledTodoList>
+        {todoStateTask.map((task, index) => (
+          <StyledTodoListItem key={index}>
+            <Task
+              defaultValue={task.name}
+              defaultIsEditing={true}
+              onEditComplete={(taskName) => handleEditComplete(index, taskName)}
+              onTaskComplete={() => handleTaskComplete(index)}
+            />
+          </StyledTodoListItem>
+        ))}
+      </StyledTodoList>
     </StyledTodoCard>
   );
 };

@@ -7,13 +7,13 @@ import COLOR from "../../../variables/color";
 import TEXT from "../../../variables/texts";
 
 const Task = ({
-  defalutValue,
-  defalutIsEditing,
+  defaultValue,
+  defaultIsEditing,
   onEditComplete,
   onTaskComplete,
 }) => {
   // タスクが編集中かどうかの状態管理
-  const [isEditing, setIsEditing] = useState(defalutIsEditing);
+  const [isEditing, setIsEditing] = useState(defaultIsEditing);
 
   const handleCompleteTask = () => {
     setIsEditing(false);
@@ -34,12 +34,12 @@ const Task = ({
       <CheckBox onClick={handleCompleteTask} />
       {isEditing ? (
         <Input
-          defalutValue={defalutValue}
+          defaultValue={defaultValue}
           onEditComplete={handleCompleteEdit}
         />
       ) : (
         <StyledTaskNameArea>
-          <StyledTaskTitle>{defalutValue}</StyledTaskTitle>
+          <StyledTaskTitle>{defaultValue}</StyledTaskTitle>
           <EditButton onClick={onEditStart} />
         </StyledTaskNameArea>
       )}
