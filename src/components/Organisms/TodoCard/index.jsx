@@ -6,7 +6,6 @@ import COLOR from "../../../variables/color";
 
 const TodoCard = () => {
   const [taskList, setTaskList] = useState([]);
-  const [taskAddOrEdit, setAddOrEdit] = useState(false);
 
   // タスクのStateが"TODO"のものを抽出
   const todoStateTask = taskList.filter((task) => {
@@ -15,18 +14,13 @@ const TodoCard = () => {
 
   // タスクを追加したときの関数(AddTaskButtonを押したとき)
   const addTask = () => {
-    //const idNum = taskList.length;
     setTaskList((taskList) => [...taskList, { name: "", state: "TODO" }]);
-    setAddOrEdit(true);
   };
 
   // タスクが完了したときの関数(CheckBoxにチェックを入れたとき)
   const handleTaskComplete = (taskIndex) => {
-    const completedTask = taskList.map((task, index) => {
-      if (index === taskIndex) {
-        task.state = "DONE";
-      }
-      return task;
+    const completedTask = taskList.filter((task, index) => {
+      return index !== taskIndex;
     });
     setTaskList(completedTask);
   };
@@ -47,7 +41,6 @@ const TodoCard = () => {
       });
     }
     setTaskList(editedTask);
-    setAddOrEdit(false);
   };
 
   return (
