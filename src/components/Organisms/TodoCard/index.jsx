@@ -67,7 +67,7 @@ export default TodoCard;
 const StyledTodoCard = styled.div`
   padding: 20px;
   border-radius: 4px;
-  background-color: ${COLOR.DEEP_BLUE_GRAY};
+  background-color: ${COLOR.LIGHT_BLACK};
 `;
 
 const StyledTodoList = styled.div`
