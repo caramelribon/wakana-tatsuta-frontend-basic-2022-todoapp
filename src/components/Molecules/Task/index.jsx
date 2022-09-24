@@ -62,14 +62,16 @@ const StyledTaskNameArea = styled.div`
   display: flex;
   align-items: center;
   flex: 1 1 auto;
+  overflow: hidden;
 `;
 
 const StyledTaskTitle = styled.p`
   color: ${COLOR.LIGHT_GRAY};
   ${TEXT.S};
   margin: 0px 10px 0px 0px;
-  display: flex;
   align-items: center;
   flex: 1 1 auto;
+  overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 `;
