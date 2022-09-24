@@ -71,4 +71,5 @@ const StyledTaskTitle = styled.p`
   display: flex;
   align-items: center;
   flex: 1 1 auto;
+  text-overflow: ellipsis;
 `;
