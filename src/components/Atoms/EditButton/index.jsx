@@ -32,6 +32,7 @@ const StyledPencilIcon = styled.img`
 `;
 
 const StyleEditButton = styled.button`
+  flex: 0 0 auto;
   position: relative;
   cursor: pointer;
   width: 20px;

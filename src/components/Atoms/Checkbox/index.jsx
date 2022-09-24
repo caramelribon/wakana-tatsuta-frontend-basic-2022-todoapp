@@ -31,6 +31,7 @@ const StyleCheckBox = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 0 0 auto;
   &:hover {
     ${StyledCheckIcon} {
       display: block;
