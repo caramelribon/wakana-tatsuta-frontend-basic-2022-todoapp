@@ -11,11 +11,11 @@ const Input = (props) => {
       inputRef.current.value = props.defalutValue;
       inputRef.current.focus();
       inputRef.current.onblur = (e) => {
-        const inputText = inputRef.current.value;
+        const inputText = e.target.value;
         props.onEditComplete(inputText);
       };
       inputRef.current.onkeypress = (e) => {
-        const inputText = inputRef.current.value;
+        const inputText = e.target.value;
         if (e.key === "Enter") {
           props.onEditComplete(inputText);
         }
