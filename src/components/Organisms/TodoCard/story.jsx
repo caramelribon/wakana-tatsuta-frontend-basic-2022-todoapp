@@ -3,7 +3,7 @@ import Component from "./index";
 
 export default {
   component: Component,
-  title: "Atoms/Input",
+  title: "Organisms/TodoCard",
   parameters: {
     backgrounds: {
       default: "dark",
@@ -14,8 +14,3 @@ export default {
 const Template = (args) => <Component {...args} />;
 
 export const Default = Template.bind({});
-
-Default.args = {
-  defaultValue: "",
-  onEditComplete: (text) => console.log(`edit complete:\n${text}`),
-};
