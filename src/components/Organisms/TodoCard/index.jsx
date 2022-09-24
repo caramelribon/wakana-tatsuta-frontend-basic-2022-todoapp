@@ -49,12 +49,19 @@ const TodoCard = () => {
   };
 
   const handleEditComplete = (id, taskName) => {
-    let edittedTask = todoTask.map((task) => {
-      if (task.id === id) {
-        task.name = taskName;
-      }
-      return task;
-    });
+    let edittedTask = [];
+    if (taskName === "") {
+      edittedTask = todoTask.filter((task) => {
+        return task.id !== id;
+      });
+    } else {
+      edittedTask = todoTask.map((task) => {
+        if (task.id === id) {
+          task.name = taskName;
+        }
+        return task;
+      });
+    }
     setTodoTask(edittedTask);
     console.log(`taskname changed: ${taskName}`);
   };
