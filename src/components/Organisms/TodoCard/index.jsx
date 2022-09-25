@@ -10,14 +10,10 @@ const TodoCard = () => {
   // 初期化処理するための状態管理
   const [initializedAction, setInitializedAction] = useState(false);
 
-  // LocalStorageから取得するデータのKey
-  const localStorageGetKey = JSON.stringify("taskList");
-
   // 初期化時処理(LocalStorageからタスクリストを取得)
   useEffect(() => {
-    const firstTaskListData = localStorage.getItem(localStorageGetKey);
-    if (firstTaskListData === null) {
-    } else {
+    const firstTaskListData = localStorage.getItem("taskList");
+    if (firstTaskListData !== null) {
       const firstTaskList = JSON.parse(firstTaskListData);
       setTaskList(firstTaskList);
     }
@@ -27,7 +23,7 @@ const TodoCard = () => {
   // タスクリストの状態や値が変化したときLocalStorageの値を変更
   useEffect(() => {
     const serveData = JSON.stringify(taskList);
-    localStorage.setItem(localStorageGetKey, serveData);
+    localStorage.setItem("taskList", serveData);
   }, [taskList]);
 
   // タスクを追加したときの関数(AddTaskButtonを押したとき)
@@ -81,7 +77,7 @@ const TodoCard = () => {
               <StyledTodoListItem key={index}>
                 <Task
                   defaultValue={task.name}
-                  defaultIsEditing={initializedAction ? false : true}
+                  defaultIsEditing={!initializedAction}
                   onEditComplete={(taskName) =>
                     handleEditComplete(index, taskName)
                   }
