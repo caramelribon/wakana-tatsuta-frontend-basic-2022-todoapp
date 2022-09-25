@@ -5,22 +5,41 @@ import Task from "../../Molecules/Task/index";
 import COLOR from "../../../variables/color";
 
 const TodoCard = () => {
+  // タスクの状態管理
   const [taskList, setTaskList] = useState([]);
+  // 初期化処理するための状態管理
+  const [initializedAction, setInitializedAction] = useState(false);
 
-  // タスクのStateが"TODO"のものを抽出
-  const todoStateTask = taskList.filter((task) => {
-    return task.state === "TODO";
-  });
+  // 初期化時処理(LocalStorageからタスクリストを取得)
+  useEffect(() => {
+    const firstTaskListData = localStorage.getItem("taskList");
+    if (firstTaskListData !== null) {
+      const firstTaskList = JSON.parse(firstTaskListData);
+      setTaskList(firstTaskList);
+    }
+    setInitializedAction(true);
+  }, []);
+
+  // タスクリストの状態や値が変化したときLocalStorageの値を変更
+  useEffect(() => {
+    const serveData = JSON.stringify(taskList);
+    localStorage.setItem("taskList", serveData);
+  }, [taskList]);
 
   // タスクを追加したときの関数(AddTaskButtonを押したとき)
   const addTask = () => {
     setTaskList((taskList) => [...taskList, { name: "", state: "TODO" }]);
+    setInitializedAction(false);
   };
 
   // タスクが完了したときの関数(CheckBoxにチェックを入れたとき)
   const handleTaskComplete = (taskIndex) => {
-    const completedTask = taskList.filter((task, index) => {
-      return index !== taskIndex;
+    const completedTask = taskList.map((task, index) => {
+      if (index === taskIndex) {
+        // taskListのタスクのstateを変更
+        task.state = "DONE";
+      }
+      return task;
     });
     setTaskList(completedTask);
   };
@@ -28,35 +47,46 @@ const TodoCard = () => {
   // タスクの編集が完了したときの関数
   const handleEditComplete = (taskIndex, taskName) => {
     let editedTask = [];
+    // タスク名がないとき(削除)
     if (taskName === "") {
+      // taskListから消す
       editedTask = taskList.filter((task, index) => {
         return index !== taskIndex;
       });
     } else {
+      // タスク名があるとき(追加)
       editedTask = taskList.map((task, index) => {
         if (index === taskIndex) {
+          // taskListのタスク名を変更
           task.name = taskName;
         }
         return task;
       });
     }
     setTaskList(editedTask);
+    setInitializedAction(false);
   };
 
   return (
     <StyledTodoCard>
       <AddTaskButton onClick={addTask} />
       <StyledTodoList>
-        {todoStateTask.map((task, index) => (
-          <StyledTodoListItem key={index}>
-            <Task
-              defaultValue={task.name}
-              defaultIsEditing={true}
-              onEditComplete={(taskName) => handleEditComplete(index, taskName)}
-              onTaskComplete={() => handleTaskComplete(index)}
-            />
-          </StyledTodoListItem>
-        ))}
+        {taskList.map((task, index) => {
+          if (task.state === "TODO") {
+            return (
+              <StyledTodoListItem key={index}>
+                <Task
+                  defaultValue={task.name}
+                  defaultIsEditing={!initializedAction}
+                  onEditComplete={(taskName) =>
+                    handleEditComplete(index, taskName)
+                  }
+                  onTaskComplete={() => handleTaskComplete(index)}
+                />
+              </StyledTodoListItem>
+            );
+          }
+        })}
       </StyledTodoList>
     </StyledTodoCard>
   );
