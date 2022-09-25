@@ -3,8 +3,10 @@ import styled from "styled-components";
 import AddTaskButton from "../../Atoms/AddTaskButton/index";
 import Task from "../../Molecules/Task/index";
 import COLOR from "../../../variables/color";
+import { useAlertHandlerContext } from "../../../contexts/alert_handler";
 
 const TodoCard = () => {
+  // const AlertHandlerContext = useAlertHandlerContext();
   // タスクの状態管理
   const [taskList, setTaskList] = useState([]);
   // 初期化処理するための状態管理
@@ -53,6 +55,8 @@ const TodoCard = () => {
       editedTask = taskList.filter((task, index) => {
         return index !== taskIndex;
       });
+      // アラートを出す
+      // AlertHandlerContext.setAlert("タスクの名前が設定されていません。");
     } else {
       // タスク名があるとき(追加)
       editedTask = taskList.map((task, index) => {
@@ -70,7 +74,7 @@ const TodoCard = () => {
   return (
     <StyledTodoCard>
       <AddTaskButton onClick={addTask} />
-      <StyledTodoList>
+      {/* <StyledTodoList>
         {taskList.map((task, index) => {
           if (task.state === "TODO") {
             return (
@@ -87,7 +91,7 @@ const TodoCard = () => {
             );
           }
         })}
-      </StyledTodoList>
+      </StyledTodoList> */}
     </StyledTodoCard>
   );
 };
