@@ -23,10 +23,6 @@ const TodoCard = () => {
     setInitializedAction(true);
   }, []);
 
-  useEffect(() => {
-    console.log(AlertHandlerContext.visible);
-  }, [AlertHandlerContext.visible]);
-
   // タスクリストの状態や値が変化したときLocalStorageの値を変更
   useEffect(() => {
     const serveData = JSON.stringify(taskList);
@@ -60,7 +56,7 @@ const TodoCard = () => {
       editedTask = taskList.filter((task, index) => {
         return index !== taskIndex;
       });
-      AlertHandlerContext.setAlert("message");
+      AlertHandlerContext.setAlert("タスクの名前が設定されていません。");
     } else {
       // タスク名があるとき(追加)
       editedTask = taskList.map((task, index) => {

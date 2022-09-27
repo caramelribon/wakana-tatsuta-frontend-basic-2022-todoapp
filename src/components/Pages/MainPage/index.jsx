@@ -3,16 +3,13 @@ import styled from "styled-components";
 import Title from "../../Atoms/Title/index";
 import TodoCard from "../../Organisms/TodoCard/index";
 import BREAKPOINT from "../../../variables/breakpoint";
-import { AlertHandlerProvider } from "../../../contexts/alert_handler";
 
 const MainPage = () => {
   return (
     <StyledMainPage>
       <Title />
       <StyledTodoCardArea>
-        <AlertHandlerProvider>
-          <TodoCard />
-        </AlertHandlerProvider>
+        <TodoCard />
       </StyledTodoCardArea>
     </StyledMainPage>
   );
