@@ -1,10 +1,13 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAlertHandlerContext } from "../../../contexts/alert_handler";
 import styled from "styled-components";
 import AddTaskButton from "../../Atoms/AddTaskButton/index";
 import Task from "../../Molecules/Task/index";
 import COLOR from "../../../variables/color";
 
 const TodoCard = () => {
+  // Contextの呼出し
+  const AlertHandlerContext = useAlertHandlerContext();
   // タスクの状態管理
   const [taskList, setTaskList] = useState([]);
   // 初期化処理するための状態管理
@@ -53,6 +56,7 @@ const TodoCard = () => {
       editedTask = taskList.filter((task, index) => {
         return index !== taskIndex;
       });
+      AlertHandlerContext.setAlert("タスクの名前が設定されていません。");
     } else {
       // タスク名があるとき(追加)
       editedTask = taskList.map((task, index) => {
